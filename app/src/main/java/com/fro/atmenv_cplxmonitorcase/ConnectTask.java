@@ -141,7 +141,7 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
                         fail=0;
                     }else fail++;
 
-                    if((fail-1)*Const.time>1000)throw new Exception("Connect fail");
+                    if((fail-1)*Const.time>5000)throw new Exception("Connect fail");
                     Log.i(Const.TAG, "Const.sun=" + Const.sun);
                     Log.i(Const.TAG, "Const.tem=" + Const.tem);
                     Log.i(Const.TAG, "Const.hum=" + Const.hum);

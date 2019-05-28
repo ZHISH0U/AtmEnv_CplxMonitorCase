@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.AbsSeekBar;
 
 public class VerticalSeekBar extends AbsSeekBar {
-    private Drawable mThumb;
     private int height;
     private int width;
 
@@ -56,11 +55,6 @@ public class VerticalSeekBar extends AbsSeekBar {
     }
 
     void onProgressRefresh(float scale, boolean fromUser) {
-        Drawable thumb = mThumb;
-        if (thumb != null) {
-            setThumbPos(getHeight(), thumb, scale, Integer.MIN_VALUE);
-            invalidate();
-        }
         if (mOnSeekBarChangeListener != null) {
             mOnSeekBarChangeListener.onProgressChanged(this, getProgress(),
                     fromUser);
@@ -105,8 +99,7 @@ public class VerticalSeekBar extends AbsSeekBar {
 
     @Override
     public void setThumb(Drawable thumb) {
-        mThumb = thumb;
-        super.setThumb(thumb);
+        super.setThumb(null);
     }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
