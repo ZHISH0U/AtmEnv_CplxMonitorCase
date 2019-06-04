@@ -93,7 +93,7 @@ public class MainActivity extends Activity {
 	private void initData() {
 		sunIp_et.setText(sp.getString("SUN_IP",Const.SUN_IP));
 		sunPort_et.setText(String.valueOf(sp.getInt("SUN_PORT",Const.SUN_PORT)));
-		temHumIp_et.setText(sp.getString("TEMHUN_IP",Const.TEMHUM_IP));
+		temHumIp_et.setText(sp.getString("TEMHUM_IP",Const.TEMHUM_IP));
 		temHumPort_et.setText(String.valueOf(sp.getInt("TEMHUM_PORT",Const.TEMHUM_PORT)));
 		pm25Ip_et.setText(sp.getString("PM25_IP",Const.PM25_IP));
 		pm25Port_et.setText(String.valueOf(sp.getInt("PM25_PORT",Const.PM25_PORT)));
