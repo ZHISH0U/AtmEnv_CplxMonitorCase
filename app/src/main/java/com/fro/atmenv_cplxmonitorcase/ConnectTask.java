@@ -27,9 +27,9 @@ import com.fro.util.StreamUtil;
 public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
 
     private Context context;
-    TextView sun_tv;
-    TextView tem_tv;
-    TextView hum_tv;
+    TextView sun_tv;  //光照
+    TextView tem_tv;    //温度
+    TextView hum_tv;    //湿度
     TextView pm25_tv;
     TextView info_tv;
     ToggleButton connect_tb;
