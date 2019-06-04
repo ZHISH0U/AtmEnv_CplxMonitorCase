@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +33,7 @@ import com.fro.util.StreamUtil;
 public class MainActivity extends Activity {
 
 	private Context context;
-
+	private SharedPreferences sp;
 	private EditText sunIp_et;
 	private EditText sunPort_et;
 	private EditText temHumIp_et;
@@ -56,7 +57,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		context = this;
-
+		sp=getSharedPreferences("config",MODE_PRIVATE);
 		// 绑定控件
 		bindView();
 		// 初始化数据
@@ -90,14 +91,14 @@ public class MainActivity extends Activity {
 	 * 初始化数据
 	 */
 	private void initData() {
-		sunIp_et.setText(Const.SUN_IP);
-		sunPort_et.setText(String.valueOf(Const.SUN_PORT));
-		temHumIp_et.setText(Const.TEMHUM_IP);
-		temHumPort_et.setText(String.valueOf(Const.TEMHUM_PORT));
-		pm25Ip_et.setText(Const.PM25_IP);
-		pm25Port_et.setText(String.valueOf(Const.PM25_PORT));
+		sunIp_et.setText(sp.getString("SUN_IP",Const.SUN_IP));
+		sunPort_et.setText(String.valueOf(sp.getInt("SUN_PORT",Const.SUN_PORT)));
+		temHumIp_et.setText(sp.getString("TEMHUN_IP",Const.TEMHUM_IP));
+		temHumPort_et.setText(String.valueOf(sp.getInt("TEMHUM_PORT",Const.TEMHUM_PORT)));
+		pm25Ip_et.setText(sp.getString("PM25_IP",Const.PM25_IP));
+		pm25Port_et.setText(String.valueOf(sp.getInt("PM25_PORT",Const.PM25_PORT)));
 
-		time_et.setText(String.valueOf(Const.time));
+		time_et.setText(String.valueOf(sp.getInt("time",Const.time)));
 	}
 
 	/**
@@ -127,6 +128,17 @@ public class MainActivity extends Activity {
 						Const.PM25_IP = PM25_IP;
 						Const.PM25_PORT = Integer.parseInt(PM25_PORT);
 						Const.time = Integer.parseInt(time);
+						//记住输入
+						SharedPreferences.Editor ed=sp.edit();
+						ed.putString("SUN_IP",SUN_IP);
+						ed.putString("TEMHUM_IP",TEMHUM_IP);
+						ed.putString("PM25_IP",PM25_IP);
+						ed.putInt("SUN_PORT",Const.SUN_PORT);
+						ed.putInt("TEMHUM_PORT",Const.TEMHUM_PORT);
+						ed.putInt("PM25_PORT",Const.PM25_PORT);
+						ed.putInt("time",Const.time);
+						ed.apply();
+						Toast.makeText(context,"配置已自动保存",Toast.LENGTH_SHORT).show();
 					} else {
 						Toast.makeText(context, "配置信息不正确,请重输！", Toast.LENGTH_SHORT).show();
 						buttonView.setChecked(false);

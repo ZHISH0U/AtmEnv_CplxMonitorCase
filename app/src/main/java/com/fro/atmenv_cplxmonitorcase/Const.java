@@ -1,4 +1,8 @@
 package com.fro.atmenv_cplxmonitorcase;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class Const {
 
 	public static String TAG="CASE";
