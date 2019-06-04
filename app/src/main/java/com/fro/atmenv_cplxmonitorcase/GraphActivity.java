@@ -70,16 +70,16 @@ public class GraphActivity extends Activity {
 	 */
 	private void initData() {
 
-		tem_sb.setMax(100);// 设置最大值
+		tem_sb.setMax(40);// 设置最大值
 		tem_sb.setProgress(0);// 设置进度
 
 		hum_sb.setMax(100);// 设置最大值
 		hum_sb.setProgress(0);// 设置进度
 
-		sun_sb.setMax(1000);// 设置最大值
+		sun_sb.setMax(2000);// 设置最大值
 		sun_sb.setProgress(0);// 设置进度
 
-		pm25_sb.setMax(100);// 设置最大值
+		pm25_sb.setMax(250);// 设置最大值
 		pm25_sb.setProgress(0);// 设置进度
 	}
 

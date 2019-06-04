@@ -72,7 +72,7 @@ public class GraphTask extends AsyncTask<Void, Void, Void> {
 			hum_graph_tv.setText(String.valueOf(Const.hum));
 		}
 		
-		if (sun_graph_tv != null &&Const.sun != null && Const.sun >= 0 && Const.sun <= 5000) {
+		if (sun_graph_tv != null &&Const.sun != null && Const.sun >= 0 && Const.sun <= 2000) {
 			sun_sb.setProgress(Const.sun);
 			sun_graph_tv.setText(String.valueOf(Const.sun));
 		}
