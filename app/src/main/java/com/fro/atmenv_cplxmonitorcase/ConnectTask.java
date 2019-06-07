@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.util.Random;
 
 import com.fro.util.FROPm25;
 import com.fro.util.FROSun;
@@ -32,6 +33,7 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
     TextView hum_tv;    //湿度
     TextView pm25_tv;
     TextView info_tv;
+    //TextView info_tv;
     ToggleButton connect_tb;
 
     private Float sun;
@@ -49,11 +51,12 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
 
     public ConnectTask(Context context, TextView tem_tv,TextView hum_tv,TextView sun_tv,TextView pm25_tv, TextView info_tv,ToggleButton btn) {
         this.context = context;
+        this.info_tv=info_tv;
         this.sun_tv = sun_tv;
         this.tem_tv = tem_tv;
         this.hum_tv = hum_tv;
         this.pm25_tv = pm25_tv;
-        this.info_tv = info_tv;
+        //this.info_tv = info_tv;
         connect_tb=btn;
     }
 
@@ -64,8 +67,9 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
     protected void onProgressUpdate(Boolean... values) {
         if(values[0]) {
 //		if (temHumSocket!=null ) {
-            info_tv.setTextColor(context.getResources().getColor(R.color.green));
+            //info_tv.setTextColor(context.getResources().getColor(R.color.green));
             info_tv.setText("连接正常！");
+            //Toast.makeText(context,"连接正常！",Toast.LENGTH_SHORT).show();
             //显示数据
             if (Const.sun != null && sun_tv != null) {
                 sun_tv.setText(String.valueOf(Const.sun));
@@ -105,10 +109,25 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         // 连接
+        System.out.println("%%%  "+Const.SUN_IP);
         sunSocket = getSocket(Const.SUN_IP, Const.SUN_PORT);
         temHumSocket = getSocket(Const.TEMHUM_IP, Const.TEMHUM_PORT);
         pm25Socket = getSocket(Const.PM25_IP, Const.PM25_PORT);
         int fail=0;
+        //System.out.println(fail);
+        while (CIRCLE) {
+            Const.hum = (int)( Math.random() * 100);
+            Const.sun = (int) (Math.random() * 1000);
+            Const.tem = (int) (Math.random() * 40);
+            Const.pm25 = (int) (Math.random() * 250);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            publishProgress(true);
+            //System.out.println(Const.sun);
+        }
         if (sunSocket != null && temHumSocket != null && pm25Socket != null) {
             // 循环读取数据
             while (CIRCLE) {
@@ -153,6 +172,7 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
                 } catch (Exception e) {
                     e.printStackTrace();
                     publishProgress(false);
+
                     break;
                 }
             }
@@ -193,8 +213,8 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
 
     @Override
     protected void onCancelled() {
-        info_tv.setTextColor(context.getResources().getColor(R.color.gray));
-        info_tv.setText("请点击连接！");
+        //info_tv.setTextColor(context.getResources().getColor(R.color.gray));
+        //info_tv.setText("请点击连接！");
     }
 
     /**

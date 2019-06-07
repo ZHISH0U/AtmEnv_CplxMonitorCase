@@ -1,0 +1,179 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:orientation="vertical"
+    tools:context="com.fro.atmenv_cplxmonitorcase.MainActivity" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#ffe4e1">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:text="配置信息"
+            android:fontFamily="宋体"
+            android:textSize="12dp"
+            android:background="#ffdab9"
+
+            android:id="@+id/conf_b"
+            />
+
+        <ToggleButton
+            android:layout_width="142dp"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:textOff="连接"
+            android:textOn="断开"
+            android:id="@+id/cone_b"
+            android:gravity="center"
+            android:background="#ff7f50"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="23dp"
+            android:text="连接断开"
+            android:textSize="20dp"
+            android:fontFamily="微软雅黑"
+            android:textColor="#ff69b4"
+            android:id="@+id/info_tv"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:background="#fff5ee"
+        android:orientation="horizontal"
+        tools:context="com.fro.atmenv_cplxmonitorcase.MainActivity">
+
+        <!-- 温度 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tem_graph_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="- -" />
+
+            <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
+                android:id="@+id/tem_sb"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="温度" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="折线图"
+                android:id="@+id/tem_b"/>
+        </LinearLayout>
+
+        <!-- 湿度 -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/hum_graph_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="- -" />
+
+            <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
+                android:id="@+id/hum_sb"
+                android:layout_width="100dp"
+                android:layout_height="450dp"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="湿度" />
+        </LinearLayout>
+
+        <!-- 光照度 -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/sun_graph_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="- -" />
+
+            <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
+                android:id="@+id/sun_sb"
+                android:layout_width="100dp"
+                android:layout_height="450dp"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="光照度" />
+        </LinearLayout>
+
+        <!-- PM2.5 -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/pm25_graph_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="- -" />
+
+            <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
+                android:id="@+id/pm25_sb"
+                android:layout_width="100dp"
+                android:layout_height="450dp"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="PM2.5" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

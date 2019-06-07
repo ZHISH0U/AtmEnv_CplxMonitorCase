@@ -1,13 +1,13 @@
 package com.fro.atmenv_cplxmonitorcase;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,190 +15,157 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.fro.util.FROPm25;
-import com.fro.util.FROSun;
-import com.fro.util.FROTemHum;
-import com.fro.util.StreamUtil;
-
 public class MainActivity extends Activity {
 
 	private Context context;
+	private GraphTask graphTask;
 	private SharedPreferences sp;
-	private EditText sunIp_et;
-	private EditText sunPort_et;
-	private EditText temHumIp_et;
-	private EditText temHumPort_et;
-	private EditText pm25Ip_et;
-	private EditText pm25Port_et;
 
-	private EditText time_et;
-	private TextView sun_tv;
-	private TextView tem_tv;
-	private TextView hum_tv;
-	private TextView pm25_tv;
-	private Button graph_bt;
-	private ToggleButton connect_tb;
+	private VerticalSeekBar tem_sb;
+	private VerticalSeekBar hum_sb;
+	private VerticalSeekBar sun_sb;
+	private VerticalSeekBar pm25_sb;
+
+	private Button tem_b;
+
+	private TextView tem_graph_tv;
+	private TextView hum_graph_tv;
+	private TextView sun_graph_tv;
+	private TextView pm25_graph_tv;
+	private ToggleButton cone_b;
 	private TextView info_tv;
-
-	private ConnectTask connectTask;
+	Button conf_b;
+    private ConnectTask connectTask;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_graph_new);
 		context = this;
 		sp=getSharedPreferences("config",MODE_PRIVATE);
 		// 绑定控件
 		bindView();
 		// 初始化数据
 		initData();
-		// 事件监听
+		// 开启任务,延时1s后开始定时任务,每2s执行一次
 		initEvent();
+		graphTask = new GraphTask(context, tem_sb, hum_sb, sun_sb, pm25_sb, tem_graph_tv, hum_graph_tv, sun_graph_tv,
+				pm25_graph_tv);
+		graphTask.setCIRCLE(true);
+		graphTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 	}
 
 	/**
 	 * 绑定控件
 	 */
-	private void bindView() {
-		sunIp_et = (EditText) findViewById(R.id.sunIp_et);
-		sunPort_et = (EditText) findViewById(R.id.sunPort_et);
-		temHumIp_et = (EditText) findViewById(R.id.temHumIp_et);
-		temHumPort_et = (EditText) findViewById(R.id.temHumPort_et);
-		pm25Ip_et = (EditText) findViewById(R.id.pm25Ip_et);
-		pm25Port_et = (EditText) findViewById(R.id.pm25Port_et);
 
-		time_et = (EditText) findViewById(R.id.time_et);
-		connect_tb = (ToggleButton) findViewById(R.id.connect_tb);
-		info_tv = (TextView) findViewById(R.id.info_tv);
-		sun_tv = (TextView) findViewById(R.id.sun_tv);
-		tem_tv = (TextView) findViewById(R.id.tem_tv);
-		hum_tv = (TextView) findViewById(R.id.hum_tv);
-		pm25_tv = (TextView) findViewById(R.id.pm25_tv);
-		graph_bt = (Button) findViewById(R.id.graph_bt);
+	private void bindView() {
+		tem_sb = (VerticalSeekBar) findViewById(R.id.tem_sb);
+		hum_sb = (VerticalSeekBar) findViewById(R.id.hum_sb);
+		sun_sb = (VerticalSeekBar) findViewById(R.id.sun_sb);
+		pm25_sb = (VerticalSeekBar) findViewById(R.id.pm25_sb);
+		cone_b=(ToggleButton)findViewById(R.id.cone_b);
+        conf_b=(Button)findViewById(R.id.conf_b);
+		info_tv=(TextView)findViewById(R.id.info_tv);
+		tem_graph_tv = (TextView) findViewById(R.id.tem_graph_tv);
+		hum_graph_tv = (TextView) findViewById(R.id.hum_graph_tv);
+		sun_graph_tv = (TextView) findViewById(R.id.sun_graph_tv);
+		pm25_graph_tv = (TextView) findViewById(R.id.pm25_graph_tv);
+
+		tem_b=(Button)findViewById(R.id.tem_b);
 	}
 
 	/**
 	 * 初始化数据
 	 */
 	private void initData() {
-		sunIp_et.setText(sp.getString("SUN_IP",Const.SUN_IP));
-		sunPort_et.setText(String.valueOf(sp.getInt("SUN_PORT",Const.SUN_PORT)));
-		temHumIp_et.setText(sp.getString("TEMHUM_IP",Const.TEMHUM_IP));
-		temHumPort_et.setText(String.valueOf(sp.getInt("TEMHUM_PORT",Const.TEMHUM_PORT)));
-		pm25Ip_et.setText(sp.getString("PM25_IP",Const.PM25_IP));
-		pm25Port_et.setText(String.valueOf(sp.getInt("PM25_PORT",Const.PM25_PORT)));
 
-		time_et.setText(String.valueOf(sp.getInt("time",Const.time)));
+		tem_sb.setMax(40);// 设置最大值
+		tem_sb.setProgress(0);// 设置进度
+
+		hum_sb.setMax(100);// 设置最大值
+		hum_sb.setProgress(0);// 设置进度
+
+		sun_sb.setMax(2000);// 设置最大值
+		sun_sb.setProgress(0);// 设置进度
+
+		pm25_sb.setMax(250);// 设置最大值
+		pm25_sb.setProgress(0);// 设置进度
+
+		Const.SUN_IP=sp.getString("SUN_IP",Const.SUN_IP);
+		Const.SUN_PORT=sp.getInt("SUN_PORT",Const.SUN_PORT);
+		Const.TEMHUM_IP=sp.getString("TEMHUM_IP",Const.TEMHUM_IP);
+		Const.TEMHUM_PORT=sp.getInt("TEMHUM_PORT",Const.TEMHUM_PORT);
+		Const.PM25_IP=sp.getString("PM25_IP",Const.PM25_IP);
+		Const.PM25_PORT=sp.getInt("PM25_PORT",Const.PM25_PORT);
+		Const.time=sp.getInt("time",Const.time);
 	}
 
-	/**
-	 * 按钮监听
-	 */
-	private void initEvent() {
+    private void initEvent() {
 
-		// 连接
-		connect_tb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        // 连接
+        cone_b.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // 获取IP和端口
+                    // 开启任务
+                    connectTask = new ConnectTask(context, tem_graph_tv, hum_graph_tv, sun_graph_tv, pm25_graph_tv,info_tv,cone_b);
+                    connectTask.setCIRCLE(true);
+                    connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                } else {
+                    // 取消任务
+                    if (connectTask != null && connectTask.getStatus() == AsyncTask.Status.RUNNING) {
+                        connectTask.setCIRCLE(false);
+                        // 如果Task还在运行，则先取消它
+                        connectTask.cancel(true);
+                        connectTask.closeSocket();
+                    }
+					info_tv.setText("连接断开");
+                }
+            }
+        });
+
+        // 柱状图
+        conf_b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConfigActivity.startThisActivity((Activity) context);
+            }
+        });
+
+        tem_b.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					// 获取IP和端口
-					String SUN_IP = sunIp_et.getText().toString().trim();
-					String SUN_PORT = sunPort_et.getText().toString().trim();
-					String TEMHUM_IP = temHumIp_et.getText().toString().trim();
-					String TEMHUM_PORT = temHumPort_et.getText().toString().trim();
-					String PM25_IP = pm25Ip_et.getText().toString().trim();
-					String PM25_PORT = pm25Port_et.getText().toString().trim();
-					String time = time_et.getText().toString().trim();
-					if (checkIpPort(SUN_IP, SUN_PORT) && checkIpPort(TEMHUM_IP, TEMHUM_PORT)
-							&& checkIpPort(PM25_IP, PM25_PORT) && !time.equals("")) {
-						Const.SUN_IP = SUN_IP;
-						Const.SUN_PORT = Integer.parseInt(SUN_PORT);
-						Const.TEMHUM_IP = TEMHUM_IP;
-						Const.TEMHUM_PORT = Integer.parseInt(TEMHUM_PORT);
-						Const.PM25_IP = PM25_IP;
-						Const.PM25_PORT = Integer.parseInt(PM25_PORT);
-						Const.time = Integer.parseInt(time);
-						//记住输入
-						SharedPreferences.Editor ed=sp.edit();
-						ed.putString("SUN_IP",SUN_IP);
-						ed.putString("TEMHUM_IP",TEMHUM_IP);
-						ed.putString("PM25_IP",PM25_IP);
-						ed.putInt("SUN_PORT",Const.SUN_PORT);
-						ed.putInt("TEMHUM_PORT",Const.TEMHUM_PORT);
-						ed.putInt("PM25_PORT",Const.PM25_PORT);
-						ed.putInt("time",Const.time);
-						ed.apply();
-						Toast.makeText(context,"配置已自动保存",Toast.LENGTH_SHORT).show();
-					} else {
-						Toast.makeText(context, "配置信息不正确,请重输！", Toast.LENGTH_SHORT).show();
-						buttonView.setChecked(false);
-						return;
-					}
-					// 开启任务
-					connectTask = new ConnectTask(context, tem_tv, hum_tv, sun_tv, pm25_tv, info_tv ,connect_tb);
-					connectTask.setCIRCLE(true);
-					connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-				} else {
-					// 取消任务
-					if (connectTask != null && connectTask.getStatus() == AsyncTask.Status.RUNNING) {
-						connectTask.setCIRCLE(false);
-						// 如果Task还在运行，则先取消它
-						connectTask.cancel(true);
-						connectTask.closeSocket();
-					}
-					info_tv.setText("请点击连接！");
-					info_tv.setTextColor(context.getResources().getColor(R.color.gray));
-				}
+			public void onClick(View view) {
+				ZheXianActivity.startThisActivity((Activity)context);
 			}
 		});
-
-		// 柱状图
-		graph_bt.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				GraphActivity.startThisActivity((Activity) context);
-			}
-		});
-	}
-
+    }
 	/**
-	 * IP地址可用端口号验证，可用端口号（1024-65536）
+	 * 启动自身
 	 *
-	 * @param IP
-	 * @param port
-	 * @return
+	 * @param activity
 	 */
-	private boolean checkIpPort(String IP, String port) {
-		try {
-			String[] ip = IP.split("\\.");
-			int min = Integer.MAX_VALUE, max = 0;
-			for (int i = 0; i < 4; i++) {
-				int tmp = Integer.parseInt(ip[i]);
-				min = Math.min(min, tmp);
-				max = Math.max(max, tmp);
-			}
-			int portInt = Integer.parseInt(port);
-			if (min >= 0 && max <= 255 && portInt > 1024 && portInt < 65536) return true;
-			else return false;
-		} catch (Exception e) {
-			return false;
-		}
+	public static void startThisActivity(Activity activity) {
+		activity.startActivity(new Intent(activity, MainActivity.class));
 	}
 
 	@Override
 	public void finish() {
 		super.finish();
 		// 取消任务
+		if (graphTask != null && graphTask.getStatus() == AsyncTask.Status.RUNNING) {
+			graphTask.setCIRCLE(false);
+			// 如果Task还在运行，则先取消它
+			graphTask.cancel(true);
+		}
 		if (connectTask != null && connectTask.getStatus() == AsyncTask.Status.RUNNING) {
 			connectTask.setCIRCLE(false);
 			// 如果Task还在运行，则先取消它
@@ -206,4 +173,5 @@ public class MainActivity extends Activity {
 			connectTask.closeSocket();
 		}
 	}
+
 }
