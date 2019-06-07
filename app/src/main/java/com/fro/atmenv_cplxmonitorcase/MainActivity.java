@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 	private VerticalSeekBar sun_sb;
 	private VerticalSeekBar pm25_sb;
 
-	private Button tem_b;
+	private Button tem_b,hum_b,pm25_b,sun_b;
 
 	private TextView tem_graph_tv;
 	private TextView hum_graph_tv;
@@ -80,6 +80,9 @@ public class MainActivity extends Activity {
 		pm25_graph_tv = (TextView) findViewById(R.id.pm25_graph_tv);
 
 		tem_b=(Button)findViewById(R.id.tem_b);
+		hum_b=findViewById(R.id.hum_b);
+		sun_b=findViewById(R.id.sun_b);
+		pm25_b=findViewById(R.id.pm25_b);
 	}
 
 	/**
@@ -145,6 +148,32 @@ public class MainActivity extends Activity {
         tem_b.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				Const.graph_title="温度折线图";
+				Const.curRecorder=Const.tem_recorder;
+				ZheXianActivity.startThisActivity((Activity)context);
+			}
+		});
+		hum_b.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Const.graph_title="湿度折线图";
+				Const.curRecorder=Const.hum_recorder;
+				ZheXianActivity.startThisActivity((Activity)context);
+			}
+		});
+		sun_b.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Const.graph_title="光照折线图";
+				Const.curRecorder=Const.sun_recorder;
+				ZheXianActivity.startThisActivity((Activity)context);
+			}
+		});
+		pm25_b.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Const.graph_title="PM2.5折线图";
+				Const.curRecorder=Const.pm25_recorder;
 				ZheXianActivity.startThisActivity((Activity)context);
 			}
 		});

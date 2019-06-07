@@ -3,6 +3,9 @@ package com.fro.atmenv_cplxmonitorcase;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Const {
 
 	public static String TAG="CASE";
@@ -13,7 +16,7 @@ public class Const {
 	public static String SUN_CHK= "01 03 00 2a 00 01 a5 c2";
 	public static int SUN_NUM=1;
 	public static int SUN_LEN=7;
-	public static Integer sun=1000;
+	public static Integer sun=null;
 	
 	//温湿度
 	public static String TEMHUM_IP= "192.168.0.100";
@@ -31,8 +34,15 @@ public class Const {
 	public static int PM25_NUM=1;
 	public static int PM25_LEN=7;
 	public static Integer pm25=null;
-	
+
+	public static List<Float>sun_recorder=new ArrayList<>();
+	public static List<Float>tem_recorder=new ArrayList<>();
+	public static List<Float>hum_recorder=new ArrayList<>();
+	public static List<Float>pm25_recorder=new ArrayList<>();
+	public static List<Float>curRecorder;
+	public static String graph_title;
 	//配置
 	public static Integer time=700;
+	public static int RecordingInterval=1000*10;
 	public static int statue;
 }

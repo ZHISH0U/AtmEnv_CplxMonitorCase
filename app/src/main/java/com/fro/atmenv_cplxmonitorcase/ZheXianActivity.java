@@ -45,23 +45,7 @@ public class ZheXianActivity extends Activity {
         V_text.addView(myview);
     }
     public List<Float> getData(){
-        List<Float>numble = new ArrayList<>();
-        numble.add(74.0F);
-        numble.add(65.0F);
-        numble.add(23.0F);
-        numble.add(34.0F);
-        numble.add(12.0F);
-        numble.add(8.0F);
-        numble.add(56.0F);
-        numble.add(23.0F);
-        numble.add(27.0F);
-        numble.add(78.0F);
-        numble.add(67.0F);
-        numble.add(45.0F);
-        numble.add(98.0F);
-        numble.add(2.0F);
-        numble.add(8.0F);
-        return numble;
+        return Const.curRecorder;
     }
     public static void startThisActivity(Activity activity) {
         System.out.println("#####################################");

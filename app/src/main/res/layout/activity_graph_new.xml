@@ -73,7 +73,7 @@
             <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
                 android:id="@+id/tem_sb"
                 android:layout_width="100dp"
-                android:layout_height="40dp"
+                android:layout_height="380dp"
                 android:gravity="center" />
 
             <TextView
@@ -107,7 +107,7 @@
             <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
                 android:id="@+id/hum_sb"
                 android:layout_width="100dp"
-                android:layout_height="450dp"
+                android:layout_height="380dp"
                 android:gravity="center" />
 
             <TextView
@@ -115,6 +115,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="湿度" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="折线图"
+                android:id="@+id/hum_b"/>
         </LinearLayout>
 
         <!-- 光照度 -->
@@ -136,7 +141,7 @@
             <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
                 android:id="@+id/sun_sb"
                 android:layout_width="100dp"
-                android:layout_height="450dp"
+                android:layout_height="380dp"
                 android:gravity="center" />
 
             <TextView
@@ -144,6 +149,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="光照度" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="折线图"
+                android:id="@+id/sun_b"/>
         </LinearLayout>
 
         <!-- PM2.5 -->
@@ -165,7 +175,7 @@
             <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
                 android:id="@+id/pm25_sb"
                 android:layout_width="100dp"
-                android:layout_height="450dp"
+                android:layout_height="380dp"
                 android:gravity="center" />
 
             <TextView
@@ -173,6 +183,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="PM2.5" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="折线图"
+                android:id="@+id/pm25_b"/>
         </LinearLayout>
 
     </LinearLayout>

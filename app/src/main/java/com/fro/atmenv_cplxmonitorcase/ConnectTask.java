@@ -35,7 +35,7 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
     TextView info_tv;
     //TextView info_tv;
     ToggleButton connect_tb;
-
+    long cur=0;
     private Float sun;
     private Float tem;
     private Float hum;
@@ -83,6 +83,10 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
             if (Const.pm25 != null && pm25_tv != null) {
                 pm25_tv.setText(String.valueOf(Const.pm25));
             }
+            if(System.currentTimeMillis()-cur>=Const.RecordingInterval){
+                record();
+                cur=System.currentTimeMillis();
+            }
         }else {
             //info_tv.setTextColor(context.getResources().getColor(R.color.red));
             //info_tv.setText("无法获取数据！");
@@ -90,6 +94,13 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
             Toast.makeText(context,"连接断开！",Toast.LENGTH_SHORT).show();
             connect_tb.setChecked(false);
         }
+    }
+
+    private void record(){
+        Const.sun_recorder.add(Const.sun.floatValue());
+        Const.tem_recorder.add(Const.tem.floatValue());
+        Const.hum_recorder.add(Const.hum.floatValue());
+        Const.pm25_recorder.add(Const.pm25.floatValue());
     }
 
     /**
@@ -172,7 +183,6 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
                 } catch (Exception e) {
                     e.printStackTrace();
                     publishProgress(false);
-
                     break;
                 }
             }
