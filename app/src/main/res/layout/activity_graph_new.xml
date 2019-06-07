@@ -40,7 +40,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="23dp"
-            android:text="连接断开"
+            android:text="请点击连接"
             android:textSize="20dp"
             android:fontFamily="微软雅黑"
             android:textColor="#ff69b4"

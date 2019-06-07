@@ -4,16 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#fff5ee"
-    tools:context="com.fro.atmenv_cplxmonitorcase.MainActivity" >
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp">
+    tools:context="com.fro.atmenv_cplxmonitorcase.ZheXianActivity" >
 
-    </LinearLayout>
-    <com.fro.atmenv_cplxmonitorcase.view.Myview
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff5ee"
-        android:id="@+id/myview"/>
-
+        android:gravity="center">
+        <FrameLayout
+            android:id="@+id/V_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </LinearLayout>
 </LinearLayout>

@@ -128,7 +128,8 @@ public class MainActivity extends Activity {
                         connectTask.cancel(true);
                         connectTask.closeSocket();
                     }
-					info_tv.setText("连接断开");
+					//info_tv.setTextColor(context.getResources().getColor(R.color.gray));
+					info_tv.setText("请点击连接");
                 }
             }
         });

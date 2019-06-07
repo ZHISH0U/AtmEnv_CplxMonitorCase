@@ -13,41 +13,31 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fro.atmenv_cplxmonitorcase.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Myview extends View {
-    private float canasWidth;                 //画布宽
-    private float canasHeight;
+    private int canasWidth;                 //画布宽
+    private int canasHeight;
     private float XPoint;                  //定义原点
     private float YPoint;
     private int XScale;                  //间隔
     private int YScale;
-    private TextView V_text;
     // private Float[] numble = {22F, 54.3F, 63F, 23F, 87F, 36F};
-    private List numble;
-    public Myview(Context context, List numble) {
+    private List<Float>numble;
+    public Myview(Context context, List<Float>numble,int canasw,int canash) {
         super(context);
+        canasWidth=canasw;
+        canasHeight=canash;
         this.numble = new ArrayList();
         this.numble = numble;
-        WindowManager wm = ((Activity) context).getWindowManager();         //获取屏幕长宽
-        int width = wm.getDefaultDisplay().getWidth();
-        int height = wm.getDefaultDisplay().getHeight();
-        System.out.println(height+" "+width);
-        canasWidth = (width * 9) / 10;                  //定义画布所占比例
-        canasHeight = height / 3;
         XPoint = canasWidth / 14.0F;                       //定义原点
         YPoint = canasHeight - 20;
-        XScale = (int) (canasWidth - 50) / (numble.size());
-        YScale = (int) ((canasHeight - 50) / 11);
+        XScale = (canasWidth - 50) / (numble.size());
+        YScale = (canasHeight - 50) / 11;
 
-        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) V_text
-                .getLayoutParams(); // 取控件textView当前的布局参数
-        linearParams.height = (int) canasHeight;// 控件的高强制设成20
-        linearParams.width = (int) canasWidth;
-        //linearParams.height = (int) 100;// 控件的高强制设成20
-        //linearParams.width = (int) 100;
-        V_text.setLayoutParams(linearParams);
     }
     @Override
     protected void onDraw(Canvas canvas) {
@@ -66,7 +56,7 @@ public class Myview extends View {
         Paint paint1 = new Paint();             // 文字画笔
         paint1.setTextSize(65);
         paint1.setColor(Color.YELLOW);
-        canvas.drawText("黄金G点历史折线", 300, 70, paint1);
+        canvas.drawText(getResources().getString(R.string.graph_title), 300, 70, paint1);
         for (int i = 0; i <= 10; i++) {
             canvas.drawLine(XPoint, YPoint - i * YScale, XPoint + 20,
                     YPoint - i * YScale, paint);                     // Y刻度
@@ -77,8 +67,8 @@ public class Myview extends View {
         canvas.drawLine(XPoint, 30, XPoint - 20, 50, paint);
         for (int j = 0; j < numble.size(); j++) {                 ////// 绘制折线
             try {
-                float y0 = (Float) numble.get(j);
-                float y1 = (Float) numble.get(j + 1);
+                float y0 = numble.get(j);
+                float y1 = numble.get(j + 1);
                 Log.i("y0", y0 + "");
                 Log.i("y1", y1 + "");
                 canvas.drawText(numble.get(j) + "",
