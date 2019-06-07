@@ -44,18 +44,18 @@ public class Myview extends View {
         super.onDraw(canvas);
         System.out.println(canasHeight+" "+canasWidth);
         Paint paint = new Paint();
-        paint.setColor(0xffff0000);
+        paint.setColor(Color.rgb(0xff,0x7f,0x50));
         paint.setTextSize(40);
         paint.setStrokeWidth(5);
         paint.setAntiAlias(false);
         Paint paint2 = new Paint();
-        paint2.setColor(0xff00ff00);
+        paint2.setColor(Color.rgb(0xff,0x7f,0x50));
         paint2.setTextSize(30);
         Path path = new Path();
         canvas.drawLine(XPoint, 30, XPoint, YPoint, paint);
         Paint paint1 = new Paint();             // 文字画笔
         paint1.setTextSize(65);
-        paint1.setColor(Color.YELLOW);
+        paint1.setColor(Color.rgb(0xff,0x69,0xb4));
         canvas.drawText(getResources().getString(R.string.graph_title), 300, 70, paint1);
         for (int i = 0; i <= 10; i++) {
             canvas.drawLine(XPoint, YPoint - i * YScale, XPoint + 20,
