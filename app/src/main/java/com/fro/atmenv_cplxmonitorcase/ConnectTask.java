@@ -130,6 +130,7 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
         pm25Socket = getSocket(Const.PM25_IP, Const.PM25_PORT);
         int fail=0;
         //System.out.println(fail);
+        /*
         while (CIRCLE) {
             Const.hum = (int)( Math.random() * 100);
             Const.sun = (int) (Math.random() * 1000);
@@ -142,7 +143,7 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
             }
             publishProgress(true);
             //System.out.println(Const.sun);
-        }
+        }*/
         if (sunSocket != null && temHumSocket != null && pm25Socket != null) {
             // 循环读取数据
             while (CIRCLE) {

@@ -29,7 +29,7 @@ public class ZheXianActivity extends Activity {
         initView();
     }
     private void initView(){
-        V_text=findViewById(R.id.V_text);
+        V_text=(FrameLayout)findViewById(R.id.V_text);
         WindowManager wm = ((Activity) context).getWindowManager();         //获取屏幕长宽
         int width = wm.getDefaultDisplay().getWidth();
         int height = wm.getDefaultDisplay().getHeight();

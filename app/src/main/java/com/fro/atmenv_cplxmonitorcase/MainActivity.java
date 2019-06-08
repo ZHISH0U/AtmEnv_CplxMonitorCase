@@ -15,12 +15,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends Activity {
 
@@ -52,9 +56,8 @@ public class MainActivity extends Activity {
 		sp=getSharedPreferences("config",MODE_PRIVATE);
 		// 绑定控件
 		bindView();
-		// 初始化数据
-		initData();
 		// 开启任务,延时1s后开始定时任务,每2s执行一次
+		initData();
 		initEvent();
 		graphTask = new GraphTask(context, tem_sb, hum_sb, sun_sb, pm25_sb, tem_graph_tv, hum_graph_tv, sun_graph_tv,
 				pm25_graph_tv);
@@ -80,9 +83,22 @@ public class MainActivity extends Activity {
 		pm25_graph_tv = (TextView) findViewById(R.id.pm25_graph_tv);
 
 		tem_b=(Button)findViewById(R.id.tem_b);
-		hum_b=findViewById(R.id.hum_b);
-		sun_b=findViewById(R.id.sun_b);
-		pm25_b=findViewById(R.id.pm25_b);
+		hum_b=(Button)findViewById(R.id.hum_b);
+		sun_b=(Button)findViewById(R.id.sun_b);
+		pm25_b=(Button)findViewById(R.id.pm25_b);
+		TextView _text=findViewById(R.id._text);
+		WindowManager wm=getWindowManager();
+		int h=wm.getDefaultDisplay().getHeight();
+		h=h-tem_b.getHeight()-_text.getHeight();
+		setHeight(tem_sb,h);
+		setHeight(hum_sb,h);
+		setHeight(sun_sb,h);
+		setHeight(pm25_sb,h);
+	}
+	private void setHeight(View v,int h){
+		ViewGroup.LayoutParams params=v.getLayoutParams();
+		params.height=h;
+		v.setLayoutParams(params);
 	}
 
 	/**
@@ -102,6 +118,8 @@ public class MainActivity extends Activity {
 		pm25_sb.setMax(250);// 设置最大值
 		pm25_sb.setProgress(0);// 设置进度
 
+	}
+	private void update(){
 		Const.SUN_IP=sp.getString("SUN_IP",Const.SUN_IP);
 		Const.SUN_PORT=sp.getInt("SUN_PORT",Const.SUN_PORT);
 		Const.TEMHUM_IP=sp.getString("TEMHUM_IP",Const.TEMHUM_IP);
@@ -119,6 +137,7 @@ public class MainActivity extends Activity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // 获取IP和端口
+					update();
                     // 开启任务
                     connectTask = new ConnectTask(context, tem_graph_tv, hum_graph_tv, sun_graph_tv, pm25_graph_tv,info_tv,cone_b);
                     connectTask.setCIRCLE(true);

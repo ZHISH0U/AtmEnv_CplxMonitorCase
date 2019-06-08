@@ -140,7 +140,7 @@ public class ConfigActivity extends Activity {
                         ed.putInt("PM25_PORT",Const.PM25_PORT);
                         ed.putInt("time",Const.time);
                         ed.apply();
-                        Toast.makeText(context,"配置已自动保存",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"配置已保存",Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(context, "配置信息不正确,请重输！", Toast.LENGTH_SHORT).show();
                         return;
