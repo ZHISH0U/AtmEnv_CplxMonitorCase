@@ -98,9 +98,13 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
 
     private void record(){
         Const.sun_recorder.add(Const.sun.floatValue());
+        if(Const.sun_recorder.size()>15)Const.sun_recorder.remove(0);
         Const.tem_recorder.add(Const.tem.floatValue());
+        if(Const.tem_recorder.size()>15)Const.tem_recorder.remove(0);
         Const.hum_recorder.add(Const.hum.floatValue());
+        if(Const.hum_recorder.size()>15)Const.hum_recorder.remove(0);
         Const.pm25_recorder.add(Const.pm25.floatValue());
+        if(Const.pm25_recorder.size()>15)Const.pm25_recorder.remove(0);
     }
 
     /**

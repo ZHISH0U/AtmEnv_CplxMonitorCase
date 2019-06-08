@@ -85,6 +85,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="折线图"
+                android:textColor="#800000"
+                android:background="#ffdab9"
                 android:id="@+id/tem_b"/>
         </LinearLayout>
 
@@ -118,6 +120,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#800000"
+                android:background="#ffdab9"
                 android:text="折线图"
                 android:id="@+id/hum_b"/>
         </LinearLayout>
@@ -153,6 +157,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="折线图"
+                android:textColor="#800000"
+                android:background="#ffdab9"
                 android:id="@+id/sun_b"/>
         </LinearLayout>
 
@@ -187,6 +193,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="折线图"
+                android:textColor="#800000"
+                android:background="#ffdab9"
                 android:id="@+id/pm25_b"/>
         </LinearLayout>
 
