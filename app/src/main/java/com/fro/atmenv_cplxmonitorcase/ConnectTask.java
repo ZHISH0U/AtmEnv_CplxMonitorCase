@@ -65,7 +65,7 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
      */
     @Override
     protected void onProgressUpdate(Boolean... values) {
-        if(values[0]) {
+        if(values[0]) {//连接正常
 //		if (temHumSocket!=null ) {
             //info_tv.setTextColor(context.getResources().getColor(R.color.green));
             info_tv.setText("连接正常！");
@@ -87,7 +87,7 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
                 record();
                 cur=System.currentTimeMillis();
             }
-        }else {
+        }else {//连接断开
             //info_tv.setTextColor(context.getResources().getColor(R.color.red));
             //info_tv.setText("无法获取数据！");
 
@@ -95,7 +95,7 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
             connect_tb.setChecked(false);
         }
     }
-
+    //定期记录数据
     private void record(){
         Const.sun_recorder.add(Const.sun.floatValue());
         if(Const.sun_recorder.size()>15)Const.sun_recorder.remove(0);

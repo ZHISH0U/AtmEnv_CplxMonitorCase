@@ -58,8 +58,9 @@ public class MainActivity extends Activity {
 		sp=getSharedPreferences("config",MODE_PRIVATE);
 		// 绑定控件
 		bindView();
-		// 开启任务,延时1s后开始定时任务,每2s执行一次
+		//初始化柱状图
 		initData();
+		//初始化事件监听
 		initEvent();
 		graphTask = new GraphTask(context, tem_sb, hum_sb, sun_sb, pm25_sb, tem_graph_tv, hum_graph_tv, sun_graph_tv,
 				pm25_graph_tv);
@@ -88,7 +89,7 @@ public class MainActivity extends Activity {
 		hum_b=(Button)findViewById(R.id.hum_b);
 		sun_b=(Button)findViewById(R.id.sun_b);
 		pm25_b=(Button)findViewById(R.id.pm25_b);
-
+		//设置柱状图高度
 		tem_sb.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 			@Override
 			public void onGlobalLayout() {
@@ -131,6 +132,7 @@ public class MainActivity extends Activity {
 		pm25_sb.setProgress(0);// 设置进度
 
 	}
+	//更新ip和port等数据
 	private void update(){
 		Const.SUN_IP=sp.getString("SUN_IP",Const.SUN_IP);
 		Const.SUN_PORT=sp.getInt("SUN_PORT",Const.SUN_PORT);
@@ -168,14 +170,14 @@ public class MainActivity extends Activity {
             }
         });
 
-        // 柱状图
+        // 配置
         conf_b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ConfigActivity.startThisActivity((Activity) context);
             }
         });
-
+		//折线图
         tem_b.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

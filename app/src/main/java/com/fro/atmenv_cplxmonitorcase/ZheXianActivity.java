@@ -28,6 +28,7 @@ public class ZheXianActivity extends Activity {
         context=this;
         initView();
     }
+    //初始化各个view
     private void initView(){
         V_text=(FrameLayout)findViewById(R.id.V_text);
         WindowManager wm = ((Activity) context).getWindowManager();         //获取屏幕长宽
@@ -44,6 +45,7 @@ public class ZheXianActivity extends Activity {
         myview=new Myview(this,getData(),canasWidth,canasHeight);
         V_text.addView(myview);
     }
+    //获取当前折线图所需数据
     public List<Float> getData(){
         return Const.curRecorder;
     }
