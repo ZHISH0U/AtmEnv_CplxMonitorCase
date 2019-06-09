@@ -13,8 +13,9 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:text="配置信息"
             android:fontFamily="宋体"
             android:textSize="12dp"
@@ -25,8 +26,9 @@
 
         <ToggleButton
             android:layout_width="142dp"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:textOff="连接"
             android:textOn="断开"
             android:id="@+id/cone_b"
@@ -37,20 +39,20 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="23dp"
+            android:layout_margin="10dp"
             android:text="请点击连接"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:fontFamily="微软雅黑"
             android:textColor="#ff69b4"
             android:id="@+id/info_tv"/>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="0dp"
         android:background="#fff5ee"
         android:orientation="horizontal"
         tools:context="com.fro.atmenv_cplxmonitorcase.MainActivity">
@@ -73,7 +75,7 @@
             <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
                 android:id="@+id/tem_sb"
                 android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_height="100dp"
                 android:gravity="center" />
 
             <TextView
@@ -110,7 +112,7 @@
             <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
                 android:id="@+id/hum_sb"
                 android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_height="100dp"
                 android:gravity="center" />
 
             <TextView
@@ -146,7 +148,7 @@
             <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
                 android:id="@+id/sun_sb"
                 android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_height="100dp"
                 android:gravity="center" />
 
             <TextView
@@ -182,7 +184,7 @@
             <com.fro.atmenv_cplxmonitorcase.view.VerticalSeekBar
                 android:id="@+id/pm25_sb"
                 android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_height="100dp"
                 android:gravity="center" />
 
             <TextView

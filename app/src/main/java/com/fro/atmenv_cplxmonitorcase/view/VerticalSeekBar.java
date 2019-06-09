@@ -92,7 +92,7 @@ public class VerticalSeekBar extends AbsSeekBar {
 //    	height = View.MeasureSpec.getSize(heightMeasureSpec) / 2;
 //      width = 50;
     	//因显示不全，需要修改height，width
-        height = (View.MeasureSpec.getSize(heightMeasureSpec) / 2)-50;
+        height = View.MeasureSpec.getSize(heightMeasureSpec);
         width = 70;
         this.setMeasuredDimension(width, height);
     }

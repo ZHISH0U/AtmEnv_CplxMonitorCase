@@ -16,10 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -86,14 +88,24 @@ public class MainActivity extends Activity {
 		hum_b=(Button)findViewById(R.id.hum_b);
 		sun_b=(Button)findViewById(R.id.sun_b);
 		pm25_b=(Button)findViewById(R.id.pm25_b);
-		TextView _text=findViewById(R.id._text);
-		WindowManager wm=getWindowManager();
-		int h=wm.getDefaultDisplay().getHeight();
-		h=h-tem_b.getHeight()-_text.getHeight();
-		setHeight(tem_sb,h);
-		setHeight(hum_sb,h);
-		setHeight(sun_sb,h);
-		setHeight(pm25_sb,h);
+
+		tem_sb.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			@Override
+			public void onGlobalLayout() {
+
+				TextView _text=findViewById(R.id._text);
+				LinearLayout _layout=findViewById(R.id._layout);
+				int h=_layout.getHeight();
+				h=h-tem_b.getHeight()-_text.getHeight();
+				if(h>=100)h-=70;
+				tem_sb.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				setHeight(tem_sb,h);
+				setHeight(hum_sb,h);
+				setHeight(sun_sb,h);
+				setHeight(pm25_sb,h);
+
+			}
+		});
 	}
 	private void setHeight(View v,int h){
 		ViewGroup.LayoutParams params=v.getLayoutParams();
