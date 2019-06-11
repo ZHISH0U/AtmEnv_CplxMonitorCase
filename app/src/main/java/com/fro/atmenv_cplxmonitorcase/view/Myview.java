@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.fro.atmenv_cplxmonitorcase.Const;
 import com.fro.atmenv_cplxmonitorcase.R;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class Myview extends View {
     private int max=-1;
     // private Float[] numble = {22F, 54.3F, 63F, 23F, 87F, 36F};
     private List<Float>numble;
+    private List<Time>timeList;
     public Myview(Context context, List<Float>numble,int canasw,int canash) {
         super(context);
         canasWidth=canasw;
@@ -80,7 +82,7 @@ public class Myview extends View {
             float y0 = numble.get(j);
 
             Log.i("y0", y0 + "");
-            canvas.drawText(numble.get(j) + "",
+            canvas.drawText(numble.get(j) + "("+Const.timeList.get(j)+")",
                     XPoint + j * XScale + 10,
                     YPoint - (y0 / (max/10)) * YScale - 20, paint2); // 文
             if(j<numble.size()-1) {

@@ -141,6 +141,7 @@ public class MainActivity extends Activity {
 		Const.PM25_IP=sp.getString("PM25_IP",Const.PM25_IP);
 		Const.PM25_PORT=sp.getInt("PM25_PORT",Const.PM25_PORT);
 		Const.time=sp.getInt("time",Const.time);
+		Const.RecordingInterval=sp.getInt("interval",Const.RecordingInterval);
 	}
 
     private void initEvent() {

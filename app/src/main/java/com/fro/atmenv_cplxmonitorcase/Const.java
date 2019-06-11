@@ -3,7 +3,9 @@ package com.fro.atmenv_cplxmonitorcase;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Const {
@@ -39,6 +41,7 @@ public class Const {
 	public static List<Float>tem_recorder=new ArrayList<>();
 	public static List<Float>hum_recorder=new ArrayList<>();
 	public static List<Float>pm25_recorder=new ArrayList<>();
+	public static List<String>timeList=new ArrayList<>();
 	public static List<Float>curRecorder;
 	public static String graph_title;
 	//配置

@@ -41,18 +41,11 @@ public class ConfigActivity extends Activity {
     private EditText temHumPort_et;
     private EditText pm25Ip_et;
     private EditText pm25Port_et;
+    private EditText flash_et;
 
     private EditText time_et;
     private Button back;
-    /*private TextView sun_tv;
-    private TextView tem_tv;
-    private TextView hum_tv;
-    private TextView pm25_tv;
-    private Button graph_bt;*/
     private Button connect_tb;
-    //private TextView info_tv;
-
-    //private ConnectTask connectTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +71,11 @@ public class ConfigActivity extends Activity {
         temHumPort_et = (EditText) findViewById(R.id.temHumPort_et);
         pm25Ip_et = (EditText) findViewById(R.id.pm25Ip_et);
         pm25Port_et = (EditText) findViewById(R.id.pm25Port_et);
-
+        flash_et=(EditText)findViewById(R.id.flash_et);
         time_et = (EditText) findViewById(R.id.time_et);
         connect_tb = (Button) findViewById(R.id.connect_tb);
-        //info_tv = (TextView) findViewById(R.id.info_tv);
         back=(Button)findViewById(R.id.back);
-        /*sun_tv = (TextView) findViewById(R.id.sun_tv);
-        tem_tv = (TextView) findViewById(R.id.tem_tv);
-        hum_tv = (TextView) findViewById(R.id.hum_tv);
-        pm25_tv = (TextView) findViewById(R.id.pm25_tv);
-        graph_bt = (Button) findViewById(R.id.graph_bt);*/
+
     }
 
     /**
@@ -102,6 +90,7 @@ public class ConfigActivity extends Activity {
         pm25Port_et.setText(String.valueOf(sp.getInt("PM25_PORT",Const.PM25_PORT)));
 
         time_et.setText(String.valueOf(sp.getInt("time",Const.time)));
+        flash_et.setText(String.valueOf(sp.getInt("interval",Const.RecordingInterval)/1000));
     }
 
     /**
@@ -121,8 +110,9 @@ public class ConfigActivity extends Activity {
                     String PM25_IP = pm25Ip_et.getText().toString().trim();
                     String PM25_PORT = pm25Port_et.getText().toString().trim();
                     String time = time_et.getText().toString().trim();
+                    String interval=flash_et.getText().toString().trim();
                     if (checkIpPort(SUN_IP, SUN_PORT) && checkIpPort(TEMHUM_IP, TEMHUM_PORT)
-                            && checkIpPort(PM25_IP, PM25_PORT) && !time.equals("")) {
+                            && checkIpPort(PM25_IP, PM25_PORT) && !time.equals("")&&!interval.equals("")) {
                         Const.SUN_IP = SUN_IP;
                         Const.SUN_PORT = Integer.parseInt(SUN_PORT);
                         Const.TEMHUM_IP = TEMHUM_IP;
@@ -130,6 +120,8 @@ public class ConfigActivity extends Activity {
                         Const.PM25_IP = PM25_IP;
                         Const.PM25_PORT = Integer.parseInt(PM25_PORT);
                         Const.time = Integer.parseInt(time);
+                        Const.RecordingInterval=Integer.parseInt(interval)*1000;
+
                         //记住输入
                         SharedPreferences.Editor ed=sp.edit();
                         ed.putString("SUN_IP",SUN_IP);
@@ -139,6 +131,7 @@ public class ConfigActivity extends Activity {
                         ed.putInt("TEMHUM_PORT",Const.TEMHUM_PORT);
                         ed.putInt("PM25_PORT",Const.PM25_PORT);
                         ed.putInt("time",Const.time);
+                        ed.putInt("interval",Const.RecordingInterval);
                         ed.apply();
                         Toast.makeText(context,"配置已保存",Toast.LENGTH_SHORT).show();
                     } else {

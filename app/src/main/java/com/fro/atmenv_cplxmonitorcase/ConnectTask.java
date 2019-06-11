@@ -15,7 +15,12 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 import com.fro.util.FROPm25;
 import com.fro.util.FROSun;
@@ -95,8 +100,14 @@ public class ConnectTask extends AsyncTask<Void, Boolean, Void> {
             connect_tb.setChecked(false);
         }
     }
-    //定期记录数据
+    public static String getTime(){
+        SimpleDateFormat formatter=new SimpleDateFormat ("HH:mm");
+        Date curDate=new Date(System.currentTimeMillis());//获取当前时间
+        return formatter.format(curDate);
+    }
     private void record(){
+        Const.timeList.add(getTime());
+        if(Const.timeList.size()>15)Const.timeList.remove(0);
         Const.sun_recorder.add(Const.sun.floatValue());
         if(Const.sun_recorder.size()>15)Const.sun_recorder.remove(0);
         Const.tem_recorder.add(Const.tem.floatValue());

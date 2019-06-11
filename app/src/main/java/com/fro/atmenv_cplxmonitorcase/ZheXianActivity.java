@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -19,7 +21,8 @@ public class ZheXianActivity extends Activity {
     private Myview myview;
     private FrameLayout V_text;
     private Context context;
-
+    static Context father;
+    private Button flash;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         System.out.println("OnCreate............................................");
@@ -27,6 +30,7 @@ public class ZheXianActivity extends Activity {
         setContentView(R.layout.zhexian);
         context=this;
         initView();
+        initEvent();
     }
     //初始化各个view
     private void initView(){
@@ -45,13 +49,23 @@ public class ZheXianActivity extends Activity {
         myview=new Myview(this,getData(),canasWidth,canasHeight);
         V_text.addView(myview);
     }
-    //获取当前折线图所需数据
+    public void initEvent(){
+        flash=(Button)findViewById(R.id.flash);
+        flash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                ZheXianActivity.startThisActivity((Activity)father);
+            }
+        });
+    }
     public List<Float> getData(){
         return Const.curRecorder;
     }
     public static void startThisActivity(Activity activity) {
         System.out.println("#####################################");
-        activity.startActivity(new Intent(activity, ZheXianActivity.class));
+        if(father==null)father=(Context)activity;
+        activity.startActivity(new Intent((Activity)father, ZheXianActivity.class));
     }
     public void finish(){
         super.finish();
